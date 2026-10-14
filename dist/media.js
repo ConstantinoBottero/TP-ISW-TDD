@@ -7,7 +7,6 @@
   let request = 0;
   const visible = new WeakMap();
   const observed = new Set();
-  const blockedButton = () => document.querySelector('[data-action="play-video"]');
 
   function pauseAll() {
     request++;
@@ -26,7 +25,6 @@
     video.classList.remove('video-ready');
     video.dataset.blocked = 'true';
     video.closest('.activity-media, .welcome-media')?.classList.add('video-fallback');
-    if (video.dataset.media === 'cover' && blockedButton()) blockedButton().hidden = false;
   }
 
   function reconcile() {
@@ -39,10 +37,7 @@
     if (!next) return;
     active = next;
     const ticket = ++request;
-    if (!next.getAttribute('src')) {
-      next.src = next.dataset.src;
-      next.load();
-    }
+    if (!next.getAttribute('src') && next.dataset.src) next.src = next.dataset.src;
     next.muted = true;
     const promise = next.play();
     promise?.then(() => {
@@ -72,7 +67,6 @@
         if (video !== active || settings.paused || settings.reduced) { video.pause(); return; }
         video.classList.add('video-ready');
         video.closest('.activity-media, .welcome-media')?.classList.remove('video-fallback');
-        if (video.dataset.media === 'cover' && blockedButton()) blockedButton().hidden = true;
       });
       video.addEventListener('waiting', () => video.classList.remove('video-ready'));
       video.addEventListener('error', () => {
