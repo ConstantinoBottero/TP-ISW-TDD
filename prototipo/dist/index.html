@@ -9,10 +9,10 @@
   <link rel="preload" href="assets/lato-regular.ttf" as="font" type="font/ttf" crossorigin>
   <link rel="preload" href="assets/lato-bold.ttf" as="font" type="font/ttf" crossorigin>
   <link rel="preload" href="assets/photos/portada.jpg" as="image">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=20261014-tirolesa-centered">
   <script src="media.js" defer></script>
   <script src="terms.js" defer></script>
-  <script src="app.js" defer></script>
+  <script src="app.js?v=media-0b7c52cdf7b2" defer></script>
 </head>
 <body class="home-view">
   <a class="skip-link" href="#welcome-title">Ir al contenido</a>
@@ -23,7 +23,6 @@
         <span>EcoHarmony <span>Park</span></span>
       </button>
       <div class="header-actions">
-        <button class="motion-button" id="motion-toggle" data-action="motion" aria-pressed="false"><span id="motion-icon" aria-hidden="true">Ⅱ</span><span id="motion-label">Pausar videos</span></button>
         <button class="help-button" data-action="help" aria-label="Ayuda para inscribirte">?</button>
       </div>
     </div>
@@ -31,7 +30,10 @@
   <main class="welcome" id="welcome" aria-labelledby="welcome-title">
     <div class="welcome-media" aria-hidden="true">
       <img src="assets/photos/portada.jpg" alt="" fetchpriority="high">
-      <video class="media-video" data-media="cover" src="assets/videos/portada.mp4" poster="assets/photos/portada.jpg" muted loop playsinline preload="auto" tabindex="-1"></video>
+      <video class="media-video" data-media="cover" poster="assets/photos/portada.jpg" muted loop playsinline preload="auto" tabindex="-1">
+        <source src="assets/videos/portada.webm" type="video/webm">
+        <source src="assets/videos/portada.mp4" type="video/mp4">
+      </video>
     </div>
     <div class="welcome-shade" aria-hidden="true"></div>
     <div class="welcome-content">

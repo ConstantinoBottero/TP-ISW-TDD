@@ -12,7 +12,6 @@ const ICON_PATHS = {
   left: '<path d="m14 5-7 7 7 7"/>', right: '<path d="m10 5 7 7-7 7"/>',
   mail: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 6 9 7 9-7"/>',
   leaf: '<path d="M20 3C8 2 2 8 5 18c10 4 16-4 15-15ZM3 21 16 8"/>',
-  replay: '<path d="M3 10a9 9 0 1 1 1 7M3 4v6h6"/>',
 };
 const ACTIVITIES = [
   { id: 'safari', name: 'Safari', capacity: 8, age: 'Todas las edades', clothing: false,
@@ -36,7 +35,6 @@ const state = { view: 'home', step: 0, activity: 'safari', date: null, time: nul
   participants: [{}], email: '', accepted: false, confirmed: false };
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 const transitionAnimations = new Set();
-let userPaused = false;
 let fieldFocused = false;
 let toastTimer;
 let modalTrigger = null;
@@ -123,14 +121,14 @@ function clearExpiredSlot(now = new Date()) {
 
 const ACTIVITY_MEDIA = {
   safari: { photo: 'assets/photos/safari.jpg', poster: 'assets/photos/safari.jpg', video: 'assets/videos/safari.mp4', position: '50% 45%' },
-  tirolesa: { photo: 'assets/photos/tirolesa-video.jpg', poster: 'assets/photos/tirolesa-video.jpg', video: 'assets/videos/tirolesa.mp4', position: '50% 45%' },
-  palestra: { photo: 'assets/photos/palestra.jpg', poster: 'assets/photos/palestra.jpg', video: 'assets/videos/palestra.mp4', position: '50% 50%' },
+  tirolesa: { photo: 'assets/photos/tirolesa-video.jpg', poster: 'assets/photos/tirolesa-video.jpg', video: 'assets/videos/tirolesa-590f8c2d8334.mp4', position: '50% 45%', ticketPosition: '50% 60%' },
+  palestra: { photo: 'assets/photos/palestra.jpg', poster: 'assets/photos/palestra.jpg', video: 'assets/videos/palestra.mp4?v=0b7c52cdf7b2', position: '50% 50%', ticketPosition: '50% 72%' },
   jardineria: { photo: 'assets/photos/jardineria.jpg', poster: 'assets/photos/jardineria.jpg', video: 'assets/videos/jardineria.mp4', position: '50% 45%' },
 };
 
-function activityMedia(item, extra = '', preview = false) {
+function activityMedia(item, extra = '', preview = false, position = null) {
   const media = ACTIVITY_MEDIA[item.id];
-  return `<div class="activity-media ${extra}" style="--media-position:${media.position}" aria-hidden="true">
+  return `<div class="activity-media ${extra}" style="--media-position:${position || media.position}" aria-hidden="true">
     <img src="${media.photo}" alt="" decoding="async" draggable="false">
     ${preview && media.video ? `<video class="media-video" data-media="${item.id}" data-src="${media.video}" poster="${media.poster}" muted loop playsinline preload="none" tabindex="-1"></video><span class="motion-status">En movimiento</span>` : ''}
   </div>`;
@@ -182,7 +180,7 @@ function heading(title, subtitle) {
 }
 
 function activityStage() {
-  return `<section class="activity-selection">${heading('Elegí tu próxima experiencia.', 'Cada aventura empieza con una elección.')}<div class="activity-grid">${ACTIVITIES.map(item => `<button class="activity-card ${item.id === state.activity ? 'selected' : ''}" data-activity="${item.id}" aria-pressed="${item.id === state.activity}"><div class="activity-visual">${activityMedia(item, '', item.id === state.activity)}<span class="activity-duration">${icon('clock')}1 hora</span><span class="selection-mark">${icon('check')}</span></div><div class="activity-info"><div class="activity-name"><h3>${item.name}</h3><span class="activity-arrow">${icon('arrow')}</span></div><p>${item.description}</p><div class="activity-meta"><span>${icon('people')}${item.capacity} lugares por turno</span><span>${item.age}</span></div></div></button>`).join('')}</div><div class="activity-bottom"><p>${icon('leaf')}Un momento en la naturaleza puede cambiar tu día.</p>${ACTIVITY_MEDIA[state.activity].video ? `<button class="text-button" data-action="replay">${icon('replay')}Reproducir video de ${activity().name}</button>` : ''}</div></section>`;
+  return `<section class="activity-selection">${heading('Elegí tu próxima experiencia.', 'Cada aventura empieza con una elección.')}<div class="activity-grid">${ACTIVITIES.map(item => `<button class="activity-card ${item.id === state.activity ? 'selected' : ''}" data-activity="${item.id}" aria-pressed="${item.id === state.activity}"><div class="activity-visual">${activityMedia(item, '', item.id === state.activity)}<span class="activity-duration">${icon('clock')}1 hora</span><span class="selection-mark">${icon('check')}</span></div><div class="activity-info"><div class="activity-name"><h3>${item.name}</h3><span class="activity-arrow">${icon('arrow')}</span></div><p>${item.description}</p><div class="activity-meta"><span>${icon('people')}${item.capacity} lugares por turno</span><span>${item.age}</span></div></div></button>`).join('')}</div><div class="activity-bottom"><p>${icon('leaf')}Un momento en la naturaleza puede cambiar tu día.</p></div></section>`;
 }
 
 function scheduleStage() {
@@ -233,7 +231,7 @@ function qr() {
 
 function ticket(confirmed = state.confirmed) {
   const item = activity();
-  return `<article class="ticket"><div class="ticket-visual">${activityMedia(item)}<span class="ticket-overline">EcoHarmony Park · ${confirmed ? 'Tu pase' : 'Tu experiencia'}</span>${confirmed ? `<span class="ticket-stamp" aria-label="Inscripción confirmada">${icon('leaf')}<span>Inscripción<br>confirmada</span></span>` : ''}</div><div class="ticket-body"><div class="ticket-heading"><div><span>Tu encuentro con la naturaleza</span><h2>${item.name}</h2></div><span class="duration-pill">${icon('clock')}1 hora</span></div>${itinerary()}${confirmed ? `<div class="ticket-perforation"></div><div class="qr-row">${qr()}<div><h3>Tu pase para la actividad.</h3><p>Presentá este QR al llegar a tu actividad.</p></div></div>` : ''}</div></article>`;
+  return `<article class="ticket"><div class="ticket-visual ticket-visual-${item.id}">${activityMedia(item, 'ticket-art', false, ACTIVITY_MEDIA[item.id].ticketPosition)}<span class="ticket-overline">EcoHarmony Park · ${confirmed ? 'Tu pase' : 'Tu experiencia'}</span>${confirmed ? `<span class="ticket-stamp" aria-label="Inscripción confirmada">${icon('leaf')}<span>Inscripción<br>confirmada</span></span>` : ''}</div><div class="ticket-body"><div class="ticket-heading"><div><span>Tu encuentro con la naturaleza</span><h2>${item.name}</h2></div><span class="duration-pill">${icon('clock')}1 hora</span></div>${itinerary()}${confirmed ? `<div class="ticket-perforation"></div><div class="qr-row">${qr()}<div><h3>Tu pase para la actividad.</h3><p>Presentá este QR al llegar a tu actividad.</p></div></div>` : ''}</div></article>`;
 }
 
 function confirmationStage() {
@@ -246,7 +244,7 @@ function confirmationStage() {
 }
 
 function canAnimate(keyboard = false) {
-  return !keyboard && !reducedMotion.matches && !userPaused;
+  return !keyboard && !reducedMotion.matches;
 }
 
 function animateElement(element, frames, options, collection = transitionAnimations) {
@@ -258,20 +256,14 @@ function animateElement(element, frames, options, collection = transitionAnimati
 }
 
 function syncMotion() {
-  const paused = userPaused || reducedMotion.matches || fieldFocused || document.hidden || byId('modal').open;
+  const paused = reducedMotion.matches || fieldFocused || document.hidden || byId('modal').open;
   document.body.classList.toggle('motion-paused', paused);
   document.body.classList.toggle('motion-reduced', reducedMotion.matches);
-  if (userPaused || reducedMotion.matches) {
+  if (reducedMotion.matches) {
     for (const animation of transitionAnimations) {
       try { animation.finish(); } catch { animation.cancel(); }
     }
   }
-  const button = byId('motion-toggle');
-  button.disabled = reducedMotion.matches;
-  button.setAttribute('aria-pressed', String(userPaused || reducedMotion.matches));
-  byId('motion-label').textContent = reducedMotion.matches ? 'Movimiento reducido' : userPaused ? 'Reanudar videos' : 'Pausar videos';
-  byId('motion-icon').textContent = userPaused || reducedMotion.matches ? '▷' : 'Ⅱ';
-  button.title = reducedMotion.matches ? 'Se respeta el movimiento reducido de tu dispositivo.' : '';
   window.ParkMedia.sync({ paused, reduced: reducedMotion.matches,
     home: state.view === 'home' && !document.body.classList.contains('mail-view'),
     activity: state.view === 'booking' && state.step === 0 && !document.body.classList.contains('mail-view') ? state.activity : null });
@@ -429,7 +421,6 @@ function handleButton(button, keyboard) {
     return;
   }
   const action = button.dataset.action;
-  if (action === 'motion') { userPaused = !userPaused; syncMotion(); return; }
   if (action === 'mail-back' || (action === 'home' && document.body.classList.contains('mail-inline'))) {
     document.body.classList.remove('mail-view', 'mail-inline');
     document.querySelector('.mail-shell')?.remove();
@@ -484,9 +475,6 @@ function handleButton(button, keyboard) {
     byId('modal').close(); document.body.classList.add('mail-inline'); renderMail();
     const title = document.querySelector('.mail-meta h1'); title.tabIndex = -1; title.focus({ preventScroll: true });
     window.scrollTo({ top: 0, behavior: 'instant' });
-  } else if (action === 'replay' || action === 'play-video') {
-    if (reducedMotion.matches) { toast('Se respeta el movimiento reducido de tu dispositivo.'); return; }
-    userPaused = false; window.ParkMedia.retry(); syncMotion();
   }
 }
 
