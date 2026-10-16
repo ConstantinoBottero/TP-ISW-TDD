@@ -68,6 +68,24 @@ class ServicioInscripcionTest {
                 emisorCorreo.mensajes().get(0).participantes());
     }
 
+    @Test
+    void debeAceptarInscripcionCuandoNombreEsValido() {
+        // Preparación: un nombre con tildes y más de dos palabras.
+        Participante participante = new Participante("María José Pérez Gómez", "33222333", 25);
+        SolicitudInscripcion solicitud = new SolicitudInscripcion(
+                ACTIVIDAD_SAFARI,
+                TURNO_MIERCOLES_14,
+                List.of(participante),
+                CONTACTO_ANA);
+
+        // Ejecución: se solicita la inscripción con ese nombre.
+        ResultadoInscripcion resultado = servicio.inscribir(solicitud);
+
+        // Resultado esperado: se acepta y conserva el nombre completo.
+        assertNotNull(resultado.idInscripcion());
+        assertEquals(solicitud, repositorio.obtenerInscripcion(resultado.idInscripcion()).orElseThrow());
+    }
+
     private SolicitudInscripcion solicitudValida(Participante... participantes) {
         return new SolicitudInscripcion(
                 ACTIVIDAD_SAFARI,
