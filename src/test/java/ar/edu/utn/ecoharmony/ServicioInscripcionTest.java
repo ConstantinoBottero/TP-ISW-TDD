@@ -120,10 +120,10 @@ class ServicioInscripcionTest {
         // Preparación: un nombre con números y los demás datos válidos.
         Participante participante = new Participante("Ana123", "33222333", 25);
         SolicitudInscripcion solicitud = new SolicitudInscripcion(
-                "safari",
-                LocalDateTime.of(2026, 10, 14, 14, 0),
+                ACTIVIDAD_SAFARI,
+                TURNO_MIERCOLES_14,
                 List.of(participante),
-                "ana@ejemplo.com");
+                CONTACTO_ANA);
 
         // Ejecución y resultado esperado: se rechaza la inscripción.
         assertThrows(IllegalArgumentException.class, () -> servicio.inscribir(solicitud));
