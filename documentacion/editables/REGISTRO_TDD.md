@@ -48,7 +48,24 @@ Cambios:
 - `ServicioInscripcion`: recibe el emisor por constructor y todavía no lo usa, para que el rojo sea de aserción y no de compilación.
 - `ServicioInscripcionTest`: el test previo se adapta a la nueva firma del record; se agrega el test de la iteración.
 
-Commit RED: _pendiente de confirmación del usuario._
+Commit RED: `80f9934`.
+
+### Iteración A1 — GREEN
+
+```
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0 -- in GeneradorQRTest
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0 -- in ServicioInscripcionTest
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0
+[INFO] BUILD SUCCESS
+```
+
+Conteos: 5 ejecutados, 0 fallos, 0 errores.
+
+Cambio: una línea en `ServicioInscripcion.inscribir`, que tras guardar llama a `emisorCorreo.enviar` con un `MensajeConfirmacion` cuyo destinatario es la constante literal `"ana@ejemplo.com"`.
+
+El destinatario fijo es deliberado. Es el valor más chico que hace pasar el test y no se generaliza todavía, porque ningún caso lo exige: con un solo contacto en la suite, leerlo de la solicitud sería anticipar la iteración A4. Esa iteración introduce un segundo contacto y obliga a eliminarlo.
+
+Commit GREEN: _pendiente de confirmación del usuario._
 
 ## Tanda B1 — Generación del QR
 
