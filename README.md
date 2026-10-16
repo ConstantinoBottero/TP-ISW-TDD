@@ -7,7 +7,7 @@ La carpeta contiene la documentación revisada, el prototipo visual y la primera
 ## Organización
 
 - **documentacion/fuentes/**: enunciados TP2/TP6, FAQ específica, FAQ general y respuestas del grupo. Son cinco fuentes distintas, conservadas sin cambios.
-- **documentacion/editables/**: cinco documentos vigentes en Markdown, incluidos los términos y condiciones; son la fuente para futuras modificaciones.
+- **documentacion/editables/**: seis documentos vigentes en Markdown, incluidos los términos y condiciones; son la fuente para futuras modificaciones.
 - **documentacion/pdf/**: las versiones PDF de los cuatro documentos principales, listos para compartir.
 - **prototipo/**: carpeta principal para editar la interfaz, los medios y su documentación.
 - **src/main/java/**: implementación Java del backend en progreso.
@@ -36,7 +36,7 @@ El plan contiene diseño orientativo y escenarios de interfaz. El catálogo desa
 
 El backend se implementa en Java 17 y las pruebas usan JUnit Jupiter. Se necesita un JDK 17 instalado. Desde la raíz, ejecutar `mvnw.cmd test` en Windows o `./mvnw test` en macOS/Linux; Maven Wrapper descarga la versión configurada automáticamente. Por ahora el repositorio es en memoria y el servicio solo registra la solicitud; no deben considerarse implementadas las reglas de edad, cupos, horarios, términos, correo o QR.
 
-La configuración Maven está en [pom.xml](pom.xml). El plan de TDD y el registro de ciclos están en [PLAN_TDD.md](documentacion/editables/PLAN_TDD.md). El prototipo de `prototipo/dist/` conserva JavaScript porque es una maqueta de frontend independiente; no es la implementación Java del backend ni parte de los tests.
+La configuración Maven está en [pom.xml](pom.xml). El mapa de seams y escenarios está en [PLAN_TDD.md](documentacion/editables/PLAN_TDD.md); la dinámica por fases para asistentes está en [GUIA_DE_TRABAJO_TDD.md](documentacion/editables/GUIA_DE_TRABAJO_TDD.md). El registro de ciclos se iniciará cuando el usuario indique la primera tanda. El prototipo de `prototipo/dist/` conserva JavaScript porque es una maqueta de frontend independiente; no es la implementación Java del backend ni parte de los tests.
 
 ## Prototipo «Portada cinematográfica y actividades reales»
 

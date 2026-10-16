@@ -39,17 +39,20 @@ Dobles solo en los límites del sistema. No se mockea nada que el grupo controle
 
 **Una causa por test.** El código de test tiene un armador de solicitud válida y cada test cambia una sola cosa; así una prueba negativa solo puede fallar por la causa que nombra. Las variantes (edades, talles, días cerrados) van con `@ParameterizedTest`, una causa por ejecución. Para probar otro día se mueve también el reloj, de modo que el turno caiga dentro de la ventana y el rechazo sea por el motivo buscado.
 
-## 3. Reglas del ciclo
+## 3. Dinámica de trabajo
 
-1. **Red.** Un solo test nuevo. En Java un tipo inexistente da error de compilación: se agrega el stub mínimo para que compile y se confirma que el test falla en la aserción, con el mensaje esperado. Ese mensaje se anota.
-2. **Green.** El código mínimo para que pase, sin anticipar los tests siguientes. Toda la suite queda en verde.
-3. **Refactor.** El TP lo exige. Se hace con la suite en verde, en los puntos de control al cerrar cada bloque de ciclos (paso 6), no en medio de un ciclo. La suite se corre antes y después.
-4. **Guardas.** Un test que pasa apenas se escribe no impulsa código. Se registra como guarda, indicando qué ciclo ya lo cubría. Las seis pruebas del enunciado se escriben igual, aunque alguna resulte guarda.
-5. **Vertical.** Un seam, un test y una implementación por ciclo. No se escribe la suite completa ni la estructura de clases por adelantado.
-6. **Nombres.** `debe[Resultado]Cuando[Condicion]` con estructura AAA (convención §4).
-7. **Registro.** Por ciclo: número, test, escenarios, motivo del rojo y cambio del verde. Es la evidencia del proceso y la base del documento de decisiones de diseño que pide el TP. Si el grupo quiere la evidencia también en el historial, un commit por rojo y otro por verde.
+La dinámica para trabajar con asistentes está detallada en [GUIA_DE_TRABAJO_TDD.md](GUIA_DE_TRABAJO_TDD.md). Para este equipo, esa guía sustituye la regla anterior de un solo test por ciclo.
 
-**Herramientas.** Java 17, Maven Wrapper 3.9.16 y JUnit Jupiter 5.14.2. El proyecto usa `pom.xml`; ejecutar `mvnw.cmd test` en Windows o `./mvnw test` en macOS/Linux. ZXing se incorporará al llegar a S3, cuando se implemente el QR real.
+1. **Selección.** El usuario elige los casos. Se trabaja en tandas pequeñas, normalmente de hasta cinco casos relacionados, en un seam acordado.
+2. **RED.** Se escriben solo los tests de la tanda. Se permite código mínimo para compilar, pero no implementar la regla. El rojo debe ser un fallo de aserción por el comportamiento esperado; los casos que ya pasan se registran como guardas.
+3. **Commit RED.** El usuario revisa y hace el commit. El asistente no prepara commits ni modifica el historial.
+4. **GREEN.** Después de la indicación del usuario, se implementa lo mínimo para que pase la tanda y la suite previa.
+5. **Commit GREEN.** El usuario hace el commit después de revisar el resultado.
+6. **REFACTOR.** Tras la indicación del usuario, se mejora el diseño sin alterar comportamiento ni añadir casos. La suite debe pasar antes y después. Si no hay una mejora real, no se fabrica una.
+7. **Commit REFACTOR.** El usuario hace el commit y confirma el cierre de la tanda antes de indicar los siguientes casos.
+8. **Registro.** Se anotan los casos, seam, IDs, comando y resultado real de cada fase, las guardas y los hashes de commit confirmados por el usuario. No se reporta una fase como realizada si falta su evidencia.
+
+**Herramientas.** Java 17, Maven Wrapper 3.9.16 y JUnit Jupiter 5.14.2. Ejecutar mvnw.cmd test en Windows o ./mvnw test en macOS/Linux. ZXing se incorporará al llegar a S3, cuando corresponda implementar el QR real.
 
 ## 4. Consultas que frenan tests
 
