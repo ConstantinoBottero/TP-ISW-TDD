@@ -19,7 +19,7 @@ Secuencia prevista y valor fijo que elimina cada iteración:
 |---|---|---|
 | A1 | Se envía un correo al contacto (E04) | Ninguno; introduce destinatario fijo. |
 | A2 | El resumen nombra actividad, turno y participantes (E01) | El cuerpo fijo del mensaje. |
-| A3 | Un grupo de cinco recibe un solo correo (G11) | Previsiblemente guarda, no rojo. |
+| A3 | Un grupo de cinco recibe un solo correo (G11) | Previsiblemente pasa al escribirse, sin rojo. |
 | A4 | Dos inscripciones conservan sus propios datos (E06) | El destinatario fijo. |
 
 Contacto: se agregó el campo `contacto` a `SolicitudInscripcion`, siguiendo «contacto resuelto» del plan de clases y el campo «Email de contacto» del prototipo, que es único por inscripción y no por participante.
@@ -37,7 +37,7 @@ Contacto: se agregó el campo `contacto` a `SolicitudInscripcion`, siguiendo «c
 
 Conteos: 5 ejecutados, 1 fallo de aserción, 0 errores. Los cuatro tests previos siguen en verde.
 
-Guardas: ninguna.
+Tests de regresión: ninguno.
 
 Cambios:
 
@@ -93,7 +93,7 @@ Commit REFACTOR: `7237067`.
 
 Conteos: 6 ejecutados, 1 fallo de aserción, 0 errores. Los cinco tests previos siguen en verde.
 
-Guardas: ninguna.
+Tests de regresión: ninguno.
 
 Decisión de diseño: el mensaje expone la actividad, el inicio del turno y los participantes como componentes propios, en lugar de un resumen de texto ya compuesto. Afirmar sobre un texto obligaría a comparar fragmentos y ataría los tests a una redacción; además, componer el texto o el HTML corresponde a la vista del correo, como muestra el prototipo. El asunto todavía no se incorpora: ningún caso lo exige.
 
@@ -138,7 +138,7 @@ No se tocó el destinatario fijo, que sigue esperando el caso de A4.
 
 Commit REFACTOR: `2257673`.
 
-### Iteración A3 — GUARDA, sin ciclo
+### Iteración A3 — Test de regresión, sin ciclo
 
 | Test | Resultado |
 |---|---|
@@ -151,11 +151,11 @@ Commit REFACTOR: `2257673`.
 
 Conteos: 7 ejecutados, 0 fallos, 0 errores.
 
-Este caso no produjo un ciclo RED-GREEN-REFACTOR. El test pasó apenas se escribió, porque `inscribir` ya enviaba un único mensaje por llamada. Se registra como guarda, según la guía; no se provocó un fallo artificial para simular un rojo.
+Este caso no produjo un ciclo RED-GREEN-REFACTOR. El test pasó apenas se escribió, porque `inscribir` ya enviaba un único mensaje por llamada desde la iteración A1. Se conserva como test de regresión; no se provocó un fallo artificial para simular un rojo.
 
 Su valor es de regresión: G11 pide un correo por inscripción y no uno por participante. Con cinco participantes, el test fija ese comportamiento y fallaría si una iteración futura pasara a enviar un mensaje por persona. La segunda aserción comprueba además que ese único mensaje incluye a las cinco personas, de modo que «un solo correo» no pueda cumplirse dejando gente afuera.
 
-Cambios: solo `ServicioInscripcionTest`. Se agregaron tres participantes de prueba (`PEDRO`, `LUCIA`, `MARTA`, con edades 12, 9 y 61) y el test de la guarda. No se tocó código de producción, y el destinatario fijo sigue esperando A4.
+Cambios: solo `ServicioInscripcionTest`. Se agregaron tres participantes de prueba (`PEDRO`, `LUCIA`, `MARTA`, con edades 12, 9 y 61) y el test de regresión. No se tocó código de producción, y el destinatario fijo sigue esperando A4.
 
 Commit: _pendiente de confirmación del usuario._
 
@@ -184,7 +184,7 @@ Contexto: Q03 quedó respondido en cuanto a cantidad (un QR por inscripción, co
 
 Conteos: 4 ejecutados, 3 fallos, 0 errores, 0 omitidos. Los tres fallos son de aserción (`Failures`), no de compilación ni de excepción (`Errors: 0`), como exige la guía.
 
-Guardas: ninguna. Los tres tests nuevos fallan.
+Tests de regresión: ninguno. Los tres tests nuevos fallan.
 
 Sin regresión: `ServicioInscripcionTest` sigue en verde (1 ejecutado, 0 fallos).
 

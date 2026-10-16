@@ -41,16 +41,16 @@ Dobles solo en los límites del sistema. No se mockea nada que el grupo controle
 
 ## 3. Dinámica de trabajo
 
-La dinámica para trabajar con asistentes está detallada en [GUIA_DE_TRABAJO_TDD.md](GUIA_DE_TRABAJO_TDD.md). Para este equipo, esa guía sustituye la regla anterior de un solo test por ciclo.
+La dinámica para trabajar con asistentes está detallada en [GUIA_DE_TRABAJO_TDD.md](GUIA_DE_TRABAJO_TDD.md), que es la referencia vigente.
 
-1. **Selección.** El usuario elige los casos. Se trabaja en tandas pequeñas, normalmente de hasta cinco casos relacionados, en un seam acordado.
-2. **RED.** Se escriben solo los tests de la tanda. Se permite código mínimo para compilar, pero no implementar la regla. El rojo debe ser un fallo de aserción por el comportamiento esperado; los casos que ya pasan se registran como guardas.
+1. **Selección.** El usuario elige los casos y el seam. Puede indicar un grupo relacionado, pero se recorre de a un caso por iteración.
+2. **RED.** Se escribe un solo test. Se permite código mínimo para compilar, pero no implementar la regla. El rojo debe ser un fallo de aserción por el comportamiento esperado. Un test que pasa al escribirse no abre un ciclo: se conserva como test de regresión y se registra aparte.
 3. **Commit RED.** El usuario revisa y hace el commit. El asistente no prepara commits ni modifica el historial.
-4. **GREEN.** Después de la indicación del usuario, se implementa lo mínimo para que pase la tanda y la suite previa.
+4. **GREEN.** Después de la indicación del usuario, se implementa lo mínimo para que pase ese test y la suite previa, aun si eso significa dejar valores escritos a mano. No se generaliza lo que ningún caso exige todavía: hacerlo dejaría sin rojo a la iteración que debía provocarlo.
 5. **Commit GREEN.** El usuario hace el commit después de revisar el resultado.
-6. **REFACTOR.** Tras la indicación del usuario, se mejora el diseño sin alterar comportamiento ni añadir casos. La suite debe pasar antes y después. Si no hay una mejora real, no se fabrica una.
-7. **Commit REFACTOR.** El usuario hace el commit y confirma el cierre de la tanda antes de indicar los siguientes casos.
-8. **Registro.** Se anotan los casos, seam, IDs, comando y resultado real de cada fase, las guardas y los hashes de commit confirmados por el usuario. No se reporta una fase como realizada si falta su evidencia.
+6. **REFACTOR.** Tras la indicación del usuario, se mejora el diseño sin alterar comportamiento ni añadir casos, incluido el código de test. La suite debe pasar antes y después. Si no hay una mejora real, no se fabrica una.
+7. **Commit REFACTOR.** El usuario hace el commit y confirma el cierre de la iteración antes de indicar la siguiente.
+8. **Registro.** Se anotan el caso, seam, IDs, comando y resultado real de cada fase, los valores fijos pendientes de generalizar, los tests de regresión y los hashes verificados con git log. No se reporta una fase como realizada si falta su evidencia.
 
 **Herramientas.** Java 17, Maven Wrapper 3.9.16 y JUnit Jupiter 5.14.2. Ejecutar mvnw.cmd test en Windows o ./mvnw test en macOS/Linux. ZXing se incorporará al llegar a S3, cuando corresponda implementar el QR real.
 
