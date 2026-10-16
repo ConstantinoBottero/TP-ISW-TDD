@@ -72,11 +72,7 @@ class ServicioInscripcionTest {
     void debeAceptarInscripcionCuandoNombreEsValido() {
         // Preparación: un nombre con tildes y más de dos palabras.
         Participante participante = new Participante("María José Pérez Gómez", "33222333", 25);
-        SolicitudInscripcion solicitud = new SolicitudInscripcion(
-                ACTIVIDAD_SAFARI,
-                TURNO_MIERCOLES_14,
-                List.of(participante),
-                CONTACTO_ANA);
+        SolicitudInscripcion solicitud = solicitudValida(participante);
 
         // Ejecución: se solicita la inscripción con ese nombre.
         ResultadoInscripcion resultado = servicio.inscribir(solicitud);
