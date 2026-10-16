@@ -26,6 +26,9 @@ public class ServicioInscripcion {
             if (nombre == null || nombre.isBlank()) {
                 throw new IllegalArgumentException("El nombre es obligatorio");
             }
+            if (nombre.matches(".*[0-9].*")) {
+                throw new IllegalArgumentException("El nombre solo puede contener letras y espacios");
+            }
         }
     }
 
