@@ -1,4 +1,11 @@
 package ar.edu.utn.ecoharmony;
 
-public record MensajeConfirmacion(String destinatario) {
+import java.time.LocalDateTime;
+import java.util.List;
+
+public record MensajeConfirmacion(
+        String destinatario,
+        String actividad,
+        LocalDateTime inicioTurno,
+        List<Participante> participantes) {
 }

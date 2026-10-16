@@ -78,7 +78,32 @@ No se tocó código de producción. En particular, no se eliminó el destinatari
 
 Candidato descartado: extraer el destinatario fijo a una constante con nombre. Daría apariencia de decisión de diseño a un valor que existe solo para ser reemplazado en A4.
 
-Commit REFACTOR: _pendiente de confirmación del usuario._
+Commit REFACTOR: `7237067`.
+
+### Iteración A2 — RED
+
+| Test | Resultado |
+|---|---|
+| `debeResumirActividadTurnoYParticipantesCuandoSeEnviaLaConfirmacion` | FALLA — `expected: <safari> but was: <null>` |
+
+```
+[ERROR] Tests run: 6, Failures: 1, Errors: 0, Skipped: 0
+[INFO] BUILD FAILURE
+```
+
+Conteos: 6 ejecutados, 1 fallo de aserción, 0 errores. Los cinco tests previos siguen en verde.
+
+Guardas: ninguna.
+
+Decisión de diseño: el mensaje expone la actividad, el inicio del turno y los participantes como componentes propios, en lugar de un resumen de texto ya compuesto. Afirmar sobre un texto obligaría a comparar fragmentos y ataría los tests a una redacción; además, componer el texto o el HTML corresponde a la vista del correo, como muestra el prototipo. El asunto todavía no se incorpora: ningún caso lo exige.
+
+Cambios:
+
+- `MensajeConfirmacion`: se agregan `actividad`, `inicioTurno` y `participantes`.
+- `ServicioInscripcion`: la llamada al emisor pasa `null` y lista vacía en los componentes nuevos. Es el mínimo para compilar conservando el rojo de aserción; el destinatario fijo sigue intacto.
+- `ServicioInscripcionTest`: se agrega el test de la iteración, apoyado en el armador extraído en A1.
+
+Commit RED: _pendiente de confirmación del usuario._
 
 ## Tanda B1 — Generación del QR
 

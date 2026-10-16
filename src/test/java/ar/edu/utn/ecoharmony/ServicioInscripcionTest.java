@@ -44,6 +44,17 @@ class ServicioInscripcionTest {
         assertEquals(CONTACTO_ANA, emisorCorreo.mensajes().get(0).destinatario());
     }
 
+    @Test
+    void debeResumirActividadTurnoYParticipantesCuandoSeEnviaLaConfirmacion() {
+        servicio.inscribir(solicitudValida(ANA, JUAN));
+
+        var mensaje = emisorCorreo.mensajes().get(0);
+
+        assertEquals(ACTIVIDAD_SAFARI, mensaje.actividad());
+        assertEquals(TURNO_MIERCOLES_14, mensaje.inicioTurno());
+        assertEquals(List.of(ANA, JUAN), mensaje.participantes());
+    }
+
     private SolicitudInscripcion solicitudValida(Participante... participantes) {
         return new SolicitudInscripcion(
                 ACTIVIDAD_SAFARI,
