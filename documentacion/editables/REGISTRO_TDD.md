@@ -62,8 +62,28 @@ Decisiones de implementación, por si el equipo quiere revisarlas:
 - Lado de 300 px: ZXing exige un tamaño y ningún requisito lo fija. Constante con nombre para cambiarlo en un solo lugar.
 - `IllegalStateException` ante fallo de ZXing es provisional. El resultado visible cuando falla el QR depende de Q10, todavía abierto.
 
-Commit GREEN: _pendiente de confirmación del usuario._
+Commit GREEN: `b70aa12`.
 
 ### Fase REFACTOR
 
-_Pendiente._
+Sin cambios. Se revisaron `GeneradorQR` y `GeneradorQRTest` y no se encontró una mejora que justifique modificar código en verde. Siguiendo la guía, no se fabrica un refactor ni un commit vacío.
+
+Candidatos evaluados y descartados:
+
+| Candidato | Motivo del descarte |
+|---|---|
+| Extraer un método de validación del contenido | Tres líneas; la indirección no reduce complejidad. |
+| `QRCodeWriter` como campo de instancia | Es sin estado y su creación es barata; no mejora legibilidad ni rendimiento observable. |
+| Sustituir `@BeforeEach` por un campo `final` en el test | Ahorra cuatro líneas, pero `ServicioInscripcionTest` usa `@BeforeEach`; la inconsistencia entre los dos tests cuesta más que el ahorro. |
+| Acotar el `catch (Exception)` del auxiliar de decodificación | El auxiliar ya devuelve `null` ante cualquier fallo; acotarlo no cambia comportamiento ni claridad. |
+| Deduplicar la llamada a `generar` entre dos tests | Mover el paso *Act* a un auxiliar empeora la estructura AAA de cada test. |
+
+Pendiente menor, no bloqueante: las líneas 51 y 65 de `GeneradorQRTest` conservan espacios sobrantes de una edición previa. Es limpieza cosmética; se resuelve junto al próximo cambio del archivo.
+
+La suite quedó en verde antes y después de la revisión: 4 ejecutados, 0 fallos, 0 errores.
+
+### Cierre de la tanda
+
+Resultado: `GeneradorQR` genera un QR real en PNG, decodificable al contenido original y adjuntable al correo. Queda disponible para la tanda de confirmación y correo, que lo usará sin dobles.
+
+Lo que esta tanda no resuelve: qué contenido identifica al QR (mitad pendiente de Q03) y qué ve el visitante si la generación falla (Q10).
