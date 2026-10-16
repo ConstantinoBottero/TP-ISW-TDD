@@ -13,8 +13,10 @@ public class ServicioInscripcion {
     }
 
     public ResultadoInscripcion inscribir(SolicitudInscripcion solicitud) {
-        if ("".equals(solicitud.participantes().get(0).nombre())) {
-            throw new IllegalArgumentException("El nombre es obligatorio");
+        for (Participante participante : solicitud.participantes()) {
+            if (participante.nombre() == null || participante.nombre().isBlank()) {
+                throw new IllegalArgumentException("El nombre es obligatorio");
+            }
         }
 
         String idInscripcion = repositorio.guardarInscripcion(solicitud);
