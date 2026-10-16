@@ -115,6 +115,20 @@ class ServicioInscripcionTest {
         assertEquals(0, emisorCorreo.mensajes().size(), "no debe enviarse una confirmación");
     }
 
+    @Test
+    void debeRechazarInscripcionCuandoNombreContieneCaracteresInvalidos() {
+        // Preparación: un nombre con números y los demás datos válidos.
+        Participante participante = new Participante("Ana123", "33222333", 25);
+        SolicitudInscripcion solicitud = new SolicitudInscripcion(
+                "safari",
+                LocalDateTime.of(2026, 10, 14, 14, 0),
+                List.of(participante),
+                "ana@ejemplo.com");
+
+        // Ejecución y resultado esperado: se rechaza la inscripción.
+        assertThrows(IllegalArgumentException.class, () -> servicio.inscribir(solicitud));
+    }
+
     private SolicitudInscripcion solicitudValida(Participante... participantes) {
         return new SolicitudInscripcion(
                 ACTIVIDAD_SAFARI,
