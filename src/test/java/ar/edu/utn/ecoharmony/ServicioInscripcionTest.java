@@ -14,6 +14,9 @@ class ServicioInscripcionTest {
     private static final String CONTACTO_ANA = "ana@ejemplo.com";
     private static final Participante ANA = new Participante("Ana Gómez", "30111222", 30);
     private static final Participante JUAN = new Participante("Juan Pérez", "28444555", 34);
+    private static final Participante PEDRO = new Participante("Pedro Sosa", "31222333", 12);
+    private static final Participante LUCIA = new Participante("Lucía Ríos", "45333444", 9);
+    private static final Participante MARTA = new Participante("Marta Díaz", "27555666", 61);
 
     private RepositorioParqueEnMemoria repositorio;
     private EmisorCorreoSimulado emisorCorreo;
@@ -53,6 +56,16 @@ class ServicioInscripcionTest {
         assertEquals(ACTIVIDAD_SAFARI, mensaje.actividad());
         assertEquals(TURNO_MIERCOLES_14, mensaje.inicioTurno());
         assertEquals(List.of(ANA, JUAN), mensaje.participantes());
+    }
+
+    @Test
+    void debeEnviarUnSoloCorreoCuandoLaInscripcionEsGrupal() {
+        servicio.inscribir(solicitudValida(ANA, JUAN, PEDRO, LUCIA, MARTA));
+
+        assertEquals(1, emisorCorreo.mensajes().size(), "un correo por inscripción, no uno por participante");
+        assertEquals(
+                List.of(ANA, JUAN, PEDRO, LUCIA, MARTA),
+                emisorCorreo.mensajes().get(0).participantes());
     }
 
     private SolicitudInscripcion solicitudValida(Participante... participantes) {

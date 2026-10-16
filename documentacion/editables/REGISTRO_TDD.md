@@ -136,7 +136,28 @@ Candidato postergado: extraer `GeneradorConfirmacion` como clase propia, previst
 
 No se tocó el destinatario fijo, que sigue esperando el caso de A4.
 
-Commit REFACTOR: _pendiente de confirmación del usuario._
+Commit REFACTOR: `2257673`.
+
+### Iteración A3 — GUARDA, sin ciclo
+
+| Test | Resultado |
+|---|---|
+| `debeEnviarUnSoloCorreoCuandoLaInscripcionEsGrupal` | PASA al escribirse |
+
+```
+[INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0
+[INFO] BUILD SUCCESS
+```
+
+Conteos: 7 ejecutados, 0 fallos, 0 errores.
+
+Este caso no produjo un ciclo RED-GREEN-REFACTOR. El test pasó apenas se escribió, porque `inscribir` ya enviaba un único mensaje por llamada. Se registra como guarda, según la guía; no se provocó un fallo artificial para simular un rojo.
+
+Su valor es de regresión: G11 pide un correo por inscripción y no uno por participante. Con cinco participantes, el test fija ese comportamiento y fallaría si una iteración futura pasara a enviar un mensaje por persona. La segunda aserción comprueba además que ese único mensaje incluye a las cinco personas, de modo que «un solo correo» no pueda cumplirse dejando gente afuera.
+
+Cambios: solo `ServicioInscripcionTest`. Se agregaron tres participantes de prueba (`PEDRO`, `LUCIA`, `MARTA`, con edades 12, 9 y 61) y el test de la guarda. No se tocó código de producción, y el destinatario fijo sigue esperando A4.
+
+Commit: _pendiente de confirmación del usuario._
 
 ## Tanda B1 — Generación del QR
 
