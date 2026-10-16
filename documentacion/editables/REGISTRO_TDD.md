@@ -120,7 +120,23 @@ Cambio: en `ServicioInscripcion.inscribir`, los tres componentes nuevos del mens
 
 Pendiente para el refactor de esta iteración: el import `java.util.List` de `ServicioInscripcion` quedó sin uso al reemplazar `List.of()` por los datos de la solicitud.
 
-Commit GREEN: _pendiente de confirmación del usuario._
+Commit GREEN: `ff30ea6`.
+
+### Iteración A2 — REFACTOR
+
+Suite antes: 6 ejecutados, 0 fallos, 0 errores, `BUILD SUCCESS`.
+Suite después: 6 ejecutados, 0 fallos, 0 errores, `BUILD SUCCESS`.
+
+Cambios, solo en `ServicioInscripcion`:
+
+- Se eliminó el import `java.util.List`, sin uso desde el verde de esta iteración.
+- Se extrajo el método privado `confirmacionDe(SolicitudInscripcion)`. `inscribir` queda con los tres pasos del caso de uso —guardar, enviar la confirmación, devolver el resultado— y la construcción del mensaje deja de competir por atención con ellos.
+
+Candidato postergado: extraer `GeneradorConfirmacion` como clase propia, previsto en el plan de clases §4. Definir ahora su interfaz obligaría a rehacerla dos veces: A4 cambia el origen del destinatario y la tanda del QR agrega el adjunto. El método privado da la misma legibilidad y se promueve a clase cuando la forma del mensaje esté estable.
+
+No se tocó el destinatario fijo, que sigue esperando el caso de A4.
+
+Commit REFACTOR: _pendiente de confirmación del usuario._
 
 ## Tanda B1 — Generación del QR
 

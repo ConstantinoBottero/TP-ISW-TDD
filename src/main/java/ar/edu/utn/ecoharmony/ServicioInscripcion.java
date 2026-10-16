@@ -1,6 +1,5 @@
 package ar.edu.utn.ecoharmony;
 
-import java.util.List;
 import java.util.Objects;
 
 /** Coordina la primera versión del caso de uso de inscripción. */
@@ -15,11 +14,15 @@ public class ServicioInscripcion {
 
     public ResultadoInscripcion inscribir(SolicitudInscripcion solicitud) {
         String idInscripcion = repositorio.guardarInscripcion(solicitud);
-        emisorCorreo.enviar(new MensajeConfirmacion(
+        emisorCorreo.enviar(confirmacionDe(solicitud));
+        return new ResultadoInscripcion(idInscripcion);
+    }
+
+    private MensajeConfirmacion confirmacionDe(SolicitudInscripcion solicitud) {
+        return new MensajeConfirmacion(
                 "ana@ejemplo.com",
                 solicitud.actividad(),
                 solicitud.inicioTurno(),
-                solicitud.participantes()));
-        return new ResultadoInscripcion(idInscripcion);
+                solicitud.participantes());
     }
 }
