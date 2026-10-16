@@ -85,16 +85,34 @@ class ServicioInscripcionTest {
 
     @Test
     void debeRechazarInscripcionCuandoNombreEstaVacioOEnBlanco() {
-        // Preparación: un participante con nombre vacío y los demás datos válidos.
+        // Preparación: vacío, espacios en otro participante y ausencia del dato.
         Participante participante = new Participante("", "33222333", 25);
+        Participante conEspacios = new Participante(" ", "33222333", 25);
+        Participante sinNombre = new Participante(null, "33222333", 25);
         SolicitudInscripcion solicitud = new SolicitudInscripcion(
                 ACTIVIDAD_SAFARI,
                 TURNO_MIERCOLES_14,
                 List.of(participante),
                 CONTACTO_ANA);
+        SolicitudInscripcion grupal = new SolicitudInscripcion(
+                ACTIVIDAD_SAFARI,
+                TURNO_MIERCOLES_14,
+                List.of(ANA, conEspacios),
+                CONTACTO_ANA);
+        SolicitudInscripcion nombreAusente = new SolicitudInscripcion(
+                ACTIVIDAD_SAFARI,
+                TURNO_MIERCOLES_14,
+                List.of(sinNombre),
+                CONTACTO_ANA);
 
-        // Ejecución y resultado esperado: se rechaza la inscripción.
-        assertThrows(IllegalArgumentException.class, () -> servicio.inscribir(solicitud));
+        // Ejecución y resultado esperado: ninguna solicitud debe aceptarse.
+        assertThrows(IllegalArgumentException.class, () -> servicio.inscribir(solicitud),
+                "debe rechazar un nombre vacío");
+        assertThrows(IllegalArgumentException.class, () -> servicio.inscribir(grupal),
+                "debe rechazar los espacios en el segundo participante");
+        assertThrows(IllegalArgumentException.class, () -> servicio.inscribir(nombreAusente),
+                "debe rechazar la ausencia de nombre");
+        assertEquals(0, emisorCorreo.mensajes().size(), "no debe enviarse una confirmación");
     }
 
     private SolicitudInscripcion solicitudValida(Participante... participantes) {
