@@ -13,6 +13,10 @@ public class ServicioInscripcion {
     }
 
     public ResultadoInscripcion inscribir(SolicitudInscripcion solicitud) {
+        if ("".equals(solicitud.participantes().get(0).nombre())) {
+            throw new IllegalArgumentException("El nombre es obligatorio");
+        }
+
         String idInscripcion = repositorio.guardarInscripcion(solicitud);
         emisorCorreo.enviar(confirmacionDe(solicitud));
         return new ResultadoInscripcion(idInscripcion);
