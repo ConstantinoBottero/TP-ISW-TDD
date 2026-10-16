@@ -6,6 +6,50 @@ Evidencia de cada tanda y fase según [GUIA_DE_TRABAJO_TDD.md](GUIA_DE_TRABAJO_T
 
 Comando de ejecución: `./mvnw test` (Linux/macOS) o `mvnw.cmd test` (Windows).
 
+## Tanda A — Confirmación por correo
+
+**Seam:** S1 `ServicioInscripcion.inscribir(solicitud)`
+**IDs del plan:** E04, E01, G11, E06
+
+Se trabaja en iteraciones de un test cada una. El verde de cada iteración usa el código más chico que la haga pasar, incluidos valores fijos; el test siguiente rompe ese valor fijo y obliga a generalizar. Es triangulación: así cada iteración deja un refactor real en lugar de llegar a la solución final en el primer verde.
+
+Secuencia prevista y valor fijo que elimina cada iteración:
+
+| Iteración | Caso | Valor fijo que elimina |
+|---|---|---|
+| A1 | Se envía un correo al contacto (E04) | Ninguno; introduce destinatario fijo. |
+| A2 | El resumen nombra actividad, turno y participantes (E01) | El cuerpo fijo del mensaje. |
+| A3 | Un grupo de cinco recibe un solo correo (G11) | Previsiblemente guarda, no rojo. |
+| A4 | Dos inscripciones conservan sus propios datos (E06) | El destinatario fijo. |
+
+Contacto: se agregó el campo `contacto` a `SolicitudInscripcion`, siguiendo «contacto resuelto» del plan de clases y el campo «Email de contacto» del prototipo, que es único por inscripción y no por participante.
+
+### Iteración A1 — RED
+
+| Test | Resultado |
+|---|---|
+| `debeEnviarUnCorreoAlContactoCuandoLaInscripcionQuedaRegistrada` | FALLA — `debe enviarse un correo por inscripción ==> expected: <1> but was: <0>` |
+
+```
+[ERROR] Tests run: 5, Failures: 1, Errors: 0, Skipped: 0
+[INFO] BUILD FAILURE
+```
+
+Conteos: 5 ejecutados, 1 fallo de aserción, 0 errores. Los cuatro tests previos siguen en verde.
+
+Guardas: ninguna.
+
+Cambios:
+
+- `MensajeConfirmacion` (nuevo): por ahora solo `destinatario`. Los demás campos aparecerán cuando un test los exija.
+- `EmisorCorreo` (nuevo): límite de entrega, con `enviar(MensajeConfirmacion)`.
+- `EmisorCorreoSimulado` (nuevo): bandeja recuperable mediante `mensajes()`. Es la implementación vigente del límite, no un doble de prueba.
+- `SolicitudInscripcion`: nuevo componente `contacto`, obligatorio.
+- `ServicioInscripcion`: recibe el emisor por constructor y todavía no lo usa, para que el rojo sea de aserción y no de compilación.
+- `ServicioInscripcionTest`: el test previo se adapta a la nueva firma del record; se agrega el test de la iteración.
+
+Commit RED: _pendiente de confirmación del usuario._
+
 ## Tanda B1 — Generación del QR
 
 **Seam:** S3 `GeneradorQR.generar(contenido)`
