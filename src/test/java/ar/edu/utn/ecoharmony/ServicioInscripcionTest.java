@@ -2,6 +2,7 @@ package ar.edu.utn.ecoharmony;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -80,6 +81,20 @@ class ServicioInscripcionTest {
         // Resultado esperado: se acepta y conserva el nombre completo.
         assertNotNull(resultado.idInscripcion());
         assertEquals(solicitud, repositorio.obtenerInscripcion(resultado.idInscripcion()).orElseThrow());
+    }
+
+    @Test
+    void debeRechazarInscripcionCuandoNombreEstaVacioOEnBlanco() {
+        // Preparación: un participante con nombre vacío y los demás datos válidos.
+        Participante participante = new Participante("", "33222333", 25);
+        SolicitudInscripcion solicitud = new SolicitudInscripcion(
+                "safari",
+                LocalDateTime.of(2026, 10, 14, 14, 0),
+                List.of(participante),
+                "ana@ejemplo.com");
+
+        // Ejecución y resultado esperado: se rechaza la inscripción.
+        assertThrows(IllegalArgumentException.class, () -> servicio.inscribir(solicitud));
     }
 
     private SolicitudInscripcion solicitudValida(Participante... participantes) {
