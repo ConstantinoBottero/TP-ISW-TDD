@@ -117,16 +117,26 @@ class ServicioInscripcionTest {
 
     @Test
     void debeRechazarInscripcionCuandoNombreContieneCaracteresInvalidos() {
-        // Preparación: un nombre con números y los demás datos válidos.
+        // Preparación: números en un nombre y un símbolo en otro participante.
         Participante participante = new Participante("Ana123", "33222333", 25);
+        Participante conSimbolo = new Participante("Ana@", "33222333", 25);
         SolicitudInscripcion solicitud = new SolicitudInscripcion(
                 ACTIVIDAD_SAFARI,
                 TURNO_MIERCOLES_14,
                 List.of(participante),
                 CONTACTO_ANA);
+        SolicitudInscripcion grupal = new SolicitudInscripcion(
+                ACTIVIDAD_SAFARI,
+                TURNO_MIERCOLES_14,
+                List.of(ANA, conSimbolo),
+                CONTACTO_ANA);
 
-        // Ejecución y resultado esperado: se rechaza la inscripción.
-        assertThrows(IllegalArgumentException.class, () -> servicio.inscribir(solicitud));
+        // Ejecución y resultado esperado: ambas solicitudes deben rechazarse.
+        assertThrows(IllegalArgumentException.class, () -> servicio.inscribir(solicitud),
+                "debe rechazar los números en el nombre");
+        assertThrows(IllegalArgumentException.class, () -> servicio.inscribir(grupal),
+                "debe rechazar el símbolo en el segundo participante");
+        assertEquals(0, emisorCorreo.mensajes().size(), "no debe enviarse una confirmación");
     }
 
     private SolicitudInscripcion solicitudValida(Participante... participantes) {
