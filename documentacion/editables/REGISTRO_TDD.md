@@ -65,7 +65,20 @@ Cambio: una línea en `ServicioInscripcion.inscribir`, que tras guardar llama a 
 
 El destinatario fijo es deliberado. Es el valor más chico que hace pasar el test y no se generaliza todavía, porque ningún caso lo exige: con un solo contacto en la suite, leerlo de la solicitud sería anticipar la iteración A4. Esa iteración introduce un segundo contacto y obliga a eliminarlo.
 
-Commit GREEN: _pendiente de confirmación del usuario._
+Commit GREEN: `382a40c`.
+
+### Iteración A1 — REFACTOR
+
+Suite antes: 5 ejecutados, 0 fallos, 0 errores, `BUILD SUCCESS`.
+Suite después: 5 ejecutados, 0 fallos, 0 errores, `BUILD SUCCESS`.
+
+Cambio, solo en `ServicioInscripcionTest`: se extrajo el armador `solicitudValida(Participante...)` que pedía el plan, y los datos repetidos pasaron a constantes con nombre (`ACTIVIDAD_SAFARI`, `ANA`, `JUAN`). Cada test queda con una sola línea de preparación y expone únicamente lo que ese caso cambia. Las iteraciones siguientes agregan participantes o contactos sin repetir la construcción completa del record.
+
+No se tocó código de producción. En particular, no se eliminó el destinatario fijo de `ServicioInscripcion`: hacerlo dejaría a la iteración A4 sin rojo.
+
+Candidato descartado: extraer el destinatario fijo a una constante con nombre. Daría apariencia de decisión de diseño a un valor que existe solo para ser reemplazado en A4.
+
+Commit REFACTOR: _pendiente de confirmación del usuario._
 
 ## Tanda B1 — Generación del QR
 

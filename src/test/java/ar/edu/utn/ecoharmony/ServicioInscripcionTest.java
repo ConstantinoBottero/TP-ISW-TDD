@@ -9,8 +9,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class ServicioInscripcionTest {
+    private static final String ACTIVIDAD_SAFARI = "safari";
     private static final LocalDateTime TURNO_MIERCOLES_14 = LocalDateTime.of(2026, 10, 14, 14, 0);
     private static final String CONTACTO_ANA = "ana@ejemplo.com";
+    private static final Participante ANA = new Participante("Ana Gómez", "30111222", 30);
+    private static final Participante JUAN = new Participante("Juan Pérez", "28444555", 34);
 
     private RepositorioParqueEnMemoria repositorio;
     private EmisorCorreoSimulado emisorCorreo;
@@ -25,14 +28,7 @@ class ServicioInscripcionTest {
 
     @Test
     void debeRegistrarInscripcionConParticipantesCuandoSolicitudEsValida() {
-        var participantes = List.of(
-                new Participante("Ana Gómez", "30111222", 30),
-                new Participante("Juan Pérez", "28444555", 34));
-        var solicitud = new SolicitudInscripcion(
-                "safari",
-                TURNO_MIERCOLES_14,
-                participantes,
-                CONTACTO_ANA);
+        var solicitud = solicitudValida(ANA, JUAN);
 
         var resultado = servicio.inscribir(solicitud);
 
@@ -42,15 +38,17 @@ class ServicioInscripcionTest {
 
     @Test
     void debeEnviarUnCorreoAlContactoCuandoLaInscripcionQuedaRegistrada() {
-        var solicitud = new SolicitudInscripcion(
-                "safari",
-                TURNO_MIERCOLES_14,
-                List.of(new Participante("Ana Gómez", "30111222", 30)),
-                CONTACTO_ANA);
-
-        servicio.inscribir(solicitud);
+        servicio.inscribir(solicitudValida(ANA));
 
         assertEquals(1, emisorCorreo.mensajes().size(), "debe enviarse un correo por inscripción");
         assertEquals(CONTACTO_ANA, emisorCorreo.mensajes().get(0).destinatario());
+    }
+
+    private SolicitudInscripcion solicitudValida(Participante... participantes) {
+        return new SolicitudInscripcion(
+                ACTIVIDAD_SAFARI,
+                TURNO_MIERCOLES_14,
+                List.of(participantes),
+                CONTACTO_ANA);
     }
 }
