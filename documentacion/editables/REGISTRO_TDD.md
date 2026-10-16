@@ -103,7 +103,24 @@ Cambios:
 - `ServicioInscripcion`: la llamada al emisor pasa `null` y lista vacía en los componentes nuevos. Es el mínimo para compilar conservando el rojo de aserción; el destinatario fijo sigue intacto.
 - `ServicioInscripcionTest`: se agrega el test de la iteración, apoyado en el armador extraído en A1.
 
-Commit RED: _pendiente de confirmación del usuario._
+Commit RED: `e98eaa3`.
+
+### Iteración A2 — GREEN
+
+```
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0 -- in GeneradorQRTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0 -- in ServicioInscripcionTest
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0
+[INFO] BUILD SUCCESS
+```
+
+Conteos: 6 ejecutados, 0 fallos, 0 errores.
+
+Cambio: en `ServicioInscripcion.inscribir`, los tres componentes nuevos del mensaje se leen de la solicitud (`actividad()`, `inicioTurno()`, `participantes()`). El destinatario conserva el valor fijo, que sigue sin tener un caso que lo obligue a cambiar.
+
+Pendiente para el refactor de esta iteración: el import `java.util.List` de `ServicioInscripcion` quedó sin uso al reemplazar `List.of()` por los datos de la solicitud.
+
+Commit GREEN: _pendiente de confirmación del usuario._
 
 ## Tanda B1 — Generación del QR
 

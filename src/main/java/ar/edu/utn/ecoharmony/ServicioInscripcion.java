@@ -15,7 +15,11 @@ public class ServicioInscripcion {
 
     public ResultadoInscripcion inscribir(SolicitudInscripcion solicitud) {
         String idInscripcion = repositorio.guardarInscripcion(solicitud);
-        emisorCorreo.enviar(new MensajeConfirmacion("ana@ejemplo.com", null, null, List.of()));
+        emisorCorreo.enviar(new MensajeConfirmacion(
+                "ana@ejemplo.com",
+                solicitud.actividad(),
+                solicitud.inicioTurno(),
+                solicitud.participantes()));
         return new ResultadoInscripcion(idInscripcion);
     }
 }
