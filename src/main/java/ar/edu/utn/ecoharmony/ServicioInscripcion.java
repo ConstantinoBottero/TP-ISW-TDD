@@ -13,15 +13,20 @@ public class ServicioInscripcion {
     }
 
     public ResultadoInscripcion inscribir(SolicitudInscripcion solicitud) {
-        for (Participante participante : solicitud.participantes()) {
-            if (participante.nombre() == null || participante.nombre().isBlank()) {
-                throw new IllegalArgumentException("El nombre es obligatorio");
-            }
-        }
+        validarNombresObligatorios(solicitud);
 
         String idInscripcion = repositorio.guardarInscripcion(solicitud);
         emisorCorreo.enviar(confirmacionDe(solicitud));
         return new ResultadoInscripcion(idInscripcion);
+    }
+
+    private void validarNombresObligatorios(SolicitudInscripcion solicitud) {
+        for (Participante participante : solicitud.participantes()) {
+            String nombre = participante.nombre();
+            if (nombre == null || nombre.isBlank()) {
+                throw new IllegalArgumentException("El nombre es obligatorio");
+            }
+        }
     }
 
     private MensajeConfirmacion confirmacionDe(SolicitudInscripcion solicitud) {
