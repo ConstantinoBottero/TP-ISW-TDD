@@ -1,8 +1,8 @@
 # TP6 - EcoHarmony Park
 
-US: **Inscribirme a actividad**. Documentación v2.0, actualizada el 14/10/2026.
+US: **Inscribirme a actividad**. Documentación actualizada el 16/10/2026.
 
-La carpeta contiene la documentación revisada y el prototipo rediseñado «Portada cinematográfica y actividades reales», preparado para su revisión con el PO. La lógica de negocio y los tests quedan para una etapa posterior.
+La carpeta contiene la documentación revisada, el prototipo visual y la primera iteración del backend TDD para **Inscribirme a actividad**. El backend y sus pruebas están en Java; el prototipo web sigue siendo estático en HTML, CSS y JavaScript.
 
 ## Organización
 
@@ -10,6 +10,9 @@ La carpeta contiene la documentación revisada y el prototipo rediseñado «Port
 - **documentacion/editables/**: cinco documentos vigentes en Markdown, incluidos los términos y condiciones; son la fuente para futuras modificaciones.
 - **documentacion/pdf/**: las versiones PDF de los cuatro documentos principales, listos para compartir.
 - **prototipo/**: carpeta principal para editar la interfaz, los medios y su documentación.
+- **src/main/java/**: implementación Java del backend en progreso.
+- **src/test/java/**: pruebas JUnit del backend.
+- **pom.xml**: compilación Java 17 y dependencias de test.
 - **.sites-sync/**: copia técnica del prototipo con el repositorio utilizado por Sites. Se conserva para sincronizar y publicar; editar primero en `prototipo/`.
 - **../Videos/**: videos originales aportados, ubicados junto a `Tp6`, fuera de los recursos operativos de la página.
 - **herramientas/**: generador de PDF, ajustado a esta estructura.
@@ -27,7 +30,13 @@ Nuevo borrador para revisión del PO: [Términos y condiciones por actividad](do
 | Convención de estilos y calidad | [Abrir](documentacion/pdf/TP6_Convencion_estilos.pdf) | [Modificar](documentacion/editables/CONVENCION_ESTILOS.md) |
 | Consultas y validación con el PO | [Abrir](documentacion/pdf/TP6_Consultas_y_validacion_PO.pdf) | [Modificar](documentacion/editables/CONSULTAS_Y_VALIDACION_PO.md) |
 
-El plan contiene diseño orientativo y escenarios de interfaz. El catálogo desarrolla escenarios de backend. Q01-Q12 identifica consultas abiertas y D01-D04, decisiones técnicas. Los escenarios están documentados; no implementados ni ejecutados.
+El plan contiene diseño orientativo y escenarios de interfaz. El catálogo desarrolla escenarios de backend. Q01-Q12 identifica consultas abiertas y D01-D04, decisiones técnicas. La primera iteración backend persiste en memoria una solicitud válida y tiene una prueba JUnit; el resto de las reglas y escenarios siguen pendientes.
+
+## Backend y pruebas
+
+El backend se implementa en Java 17 y las pruebas usan JUnit Jupiter. Se necesita un JDK 17 instalado. Desde la raíz, ejecutar `mvnw.cmd test` en Windows o `./mvnw test` en macOS/Linux; Maven Wrapper descarga la versión configurada automáticamente. Por ahora el repositorio es en memoria y el servicio solo registra la solicitud; no deben considerarse implementadas las reglas de edad, cupos, horarios, términos, correo o QR.
+
+La configuración Maven está en [pom.xml](pom.xml). El plan de TDD y el registro de ciclos están en [PLAN_TDD.md](documentacion/editables/PLAN_TDD.md). El prototipo de `prototipo/dist/` conserva JavaScript porque es una maqueta de frontend independiente; no es la implementación Java del backend ni parte de los tests.
 
 ## Prototipo «Portada cinematográfica y actividades reales»
 
@@ -43,7 +52,7 @@ Archivos de trabajo:
 - [README del prototipo](prototipo/README.md): recorrido y alcance.
 - [Medios y movimiento](prototipo/ARTE_Y_MOVIMIENTO.md): procedencia, créditos y comportamiento de los recursos audiovisuales.
 
-La carpeta dist contiene los archivos editables del prototipo en HTML, CSS y JavaScript, sin framework ni dependencias de instalación. La futura aplicación mantiene Java para backend y TypeScript para frontend como lenguajes elegidos.
+La carpeta dist contiene los archivos editables del frontend en HTML, CSS y JavaScript, sin framework ni dependencias de instalación. El equipo adopta Java para el backend y JavaScript para el frontend; el prototipo será la base de la interfaz futura.
 
 El recorrido incorpora una portada con video de referencia, tarjetas fotográficas, videos locales para Safari, Tirolesa, Palestra y Jardinería, cabecera compacta y pase/correo de muestra. Tirolesa y Palestra utilizan copias optimizadas de los clips aportados; los originales se conservan por separado. Los medios no afirman instalaciones ni especies confirmadas del parque. No tiene aprobación registrada del PO ni implementa las reglas del plan. La presentación permite validar estética, recorrido, escenas y textos; las consultas de dominio siguen abiertas.
 

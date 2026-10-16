@@ -2,7 +2,7 @@
 
 EcoHarmony Park | TP6 | Inscribirme a actividad
 
-Versión 0.1 - 14/10/2026 (borrador por pasos)
+Versión 0.2 - 16/10/2026 (primera iteración implementada)
 
 Plan de los ciclos Red-Green-Refactor para implementar la US. No contiene código ni tests ejecutados. Se apoya en el [plan de clases y escenarios](PLAN_CLASES_METODOS_Y_ESCENARIOS.md) (IDs A-H), la [convención de estilos](CONVENCION_ESTILOS.md) y las [consultas al PO](CONSULTAS_Y_VALIDACION_PO.md) (Q01-Q12, D01-D04).
 
@@ -22,7 +22,7 @@ Un seam es la interfaz pública donde se observa el comportamiento sin entrar en
 
 - D09, H05 y la parte concurrente de D10: necesitan el adaptador real de almacenamiento (D02, D04).
 - A08, B06 y la cantidad 1,5 de C04: son datos externos con tipo o valor imposible para el dominio, y corresponden al límite de deserialización, que no existe hasta elegir la capa HTTP.
-- F01-F13: la interfaz, con framework TypeScript sin elegir.
+- F01-F13: la interfaz JavaScript, con framework sin elegir.
 - E03, B16 y H04: dependen de Q03 y Q09 (ver §4).
 
 ## 2. Dobles y datos de prueba
@@ -49,7 +49,7 @@ Dobles solo en los límites del sistema. No se mockea nada que el grupo controle
 6. **Nombres.** `debe[Resultado]Cuando[Condicion]` con estructura AAA (convención §4).
 7. **Registro.** Por ciclo: número, test, escenarios, motivo del rojo y cambio del verde. Es la evidencia del proceso y la base del documento de decisiones de diseño que pide el TP. Si el grupo quiere la evidencia también en el historial, un commit por rojo y otro por verde.
 
-**Herramientas.** Java 17 como versión de compilación, Maven Wrapper (`mvnw`, Maven 3.9.16), JUnit 5.14 con tests parametrizados, y ZXing para el QR real al llegar a S3. Se comprobó que esa configuración compila y que el primer test del paso 2 falla en la aserción; el código de prueba no quedó en el repo.
+**Herramientas.** Java 17, Maven Wrapper 3.9.16 y JUnit Jupiter 5.14.2. El proyecto usa `pom.xml`; ejecutar `mvnw.cmd test` en Windows o `./mvnw test` en macOS/Linux. ZXing se incorporará al llegar a S3, cuando se implemente el QR real.
 
 ## 4. Consultas que frenan tests
 
@@ -67,6 +67,7 @@ Estos tests se escriben recién con la respuesta del PO. Hasta entonces no se fi
 
 ## Pendiente
 
+- **Paso 1 completado:** se migró la primera prueba de servicio/repositorio a Java + JUnit. Comprueba que una solicitud válida queda recuperable con todos sus participantes. La implementación actual solo guarda y devuelve un identificador; aún no aplica reglas de negocio.
 - Paso 2: ciclos de S1 para las seis pruebas del enunciado.
 - Paso 3: ciclos de S1 para el resto de las reglas.
 - Paso 4: ciclos de S2.

@@ -1,8 +1,8 @@
 # Convención de estilos y calidad
 
-EcoHarmony Park | TP6 | Versión 2.0 - 14/10/2026
+EcoHarmony Park | TP6 | Versión 2.1 - 16/10/2026
 
-Backend Java y frontend TypeScript. Esta convención actualiza la del grupo y unifica criterios antes de programar. No selecciona framework, BD, biblioteca de QR ni herramienta de pruebas. Las reglas locales explícitas prevalecen sobre referencias generales.
+Backend Java y frontend JavaScript. Esta convención actualiza la del grupo y unifica criterios antes de programar. El backend usa Maven y JUnit; siguen sin elegirse framework frontend, base de datos y biblioteca de QR. Las reglas locales explícitas prevalecen sobre referencias generales.
 
 ## 1. Criterios comunes
 
@@ -24,13 +24,11 @@ Errores: identificar categoría y campo/persona afectada. El equipo elegirá ent
 
 Tiempo: usar un reloj controlable. No depender de la hora real en pruebas de ventana. La zona operativa es D01; no asumir la zona del dispositivo visitante.
 
-## 3. Frontend TypeScript
+## 3. Frontend JavaScript
 
-Referencia general: Google TypeScript Style Guide. El equipo adopta estas reglas locales: modo estricto, sin any en código propio, unknown para entradas externas y validación antes de usarlas. Las funciones propias declaran su retorno; no se fuerzan firmas imposibles en APIs de terceros. Preferir interface para estructuras de objetos y props; type para uniones y alias. Estas preferencias locales no se atribuyen como obligaciones de la guía general.
+Se utiliza JavaScript moderno del navegador, sin TypeScript ni compilador por ahora. Usar `const` por defecto y `let` cuando el valor deba reasignarse; evitar `var`. Nombres de funciones y variables en camelCase. Mantener las responsabilidades pequeñas y separar datos, presentación y manejo de eventos según los módulos que se acuerden. No incorporar un framework por convención: la elección sigue abierta.
 
-Componentes, interfaces y tipos en PascalCase; servicios/utilidades y sus archivos en camelCase. Archivos de componentes en PascalCase con la extensión del framework elegido. No fijar React o Vue por el nombre de un ejemplo.
-
-Los datos de API se validan en el límite; una aserción de tipo no valida datos en ejecución. La validación de UI ayuda al visitante, pero no reemplaza al backend. No modificar objetos compartidos de forma que una pantalla altere silenciosamente los datos de otra.
+Los datos que llegan de formularios, almacenamiento o API se validan en ejecución antes de usarse. La validación de UI ayuda al visitante, pero no reemplaza al backend Java. Evitar modificar objetos compartidos de forma que una pantalla altere silenciosamente los datos de otra.
 
 ## 4. Nombres y estructura de pruebas futuras
 
@@ -48,7 +46,7 @@ Patrón AAA: preparar un escenario independiente; ejecutar la acción; comprobar
 - Red: comprobar el fallo previsto; Green: mínimo para pasar; Refactor: mejorar sin alterar comportamiento y volver a verificar. Esta es la consigna del TP6.
 - No escribir toda la suite ni toda la estructura primero. No usar porcentaje de cobertura como sustituto de las reglas.
 
-Esta sección establece convenciones para la etapa futura. Actualmente no se escriben ni ejecutan tests de la aplicación.
+Esta sección establece convenciones para las siguientes iteraciones. Actualmente existe una primera prueba JUnit del backend; todavía no hay pruebas automatizadas del frontend.
 
 ## 5. Diseño de interfaz
 
@@ -95,9 +93,8 @@ Maqueta navegable, datos de muestra, resumen y correo simulado en ventana separa
 ## 7. Referencias
 
 - Google Java Style Guide: https://google.github.io/styleguide/javaguide.html (consulta 14/10/2026).
-- Google TypeScript Style Guide: https://google.github.io/styleguide/tsguide.html (consulta 14/10/2026).
 - W3C, Understanding SC 1.4.3 Contrast Minimum: https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html (consulta 14/10/2026).
 - ISW_TP_ENUN_6.pdf, p.1: Red-Green-Refactor.
 - Convención de estilos original del grupo y FAQ específica, preguntas 3/24: lenguajes, paleta, Lato y mobile first.
 
-Versión 2.0: unifica nombres de tests, explicita reglas locales frente a las guías generales, documenta contraste y mantiene decisiones de framework/almacenamiento abiertas.
+Versión 2.1: actualiza el frontend acordado a JavaScript y aclara el estado inicial de las pruebas. Mantiene decisiones de framework/almacenamiento abiertas.

@@ -1,6 +1,6 @@
 # Consultas y validación con el PO
 
-EcoHarmony Park | Inscribirme a actividad | Versión 2.1 - 14/10/2026
+EcoHarmony Park | Inscribirme a actividad | Versión 2.2 - 16/10/2026
 
 Registro para completar en la reunión. No se enviaron consultas ni se registraron aprobaciones nuevas. Las respuestas ya disponibles se separan de las preguntas abiertas. El prototipo todavía espera las indicaciones concretas de rediseño del usuario.
 
@@ -30,7 +30,7 @@ Cada respuesta se registra con ID, texto acordado, fecha, persona que respondió
 | D03 | Contrato de reintento, idempotencia y recuperación de mensajes | Evitar consumo duplicado por reintento técnico; respetar resultado visible acordado en Q11. |
 | D04 | Mecanismo de atomicidad y demostración de concurrencia | No superar capacidad ni confirmar dos actividades simultáneas para una persona. Los dobles no demuestran garantías del adaptador real. |
 
-Siguen abiertas la selección de framework, herramientas de pruebas y organización del equipo. Java y TypeScript ya están elegidos; no se atribuyen esas decisiones al PO.
+Siguen abiertas la selección de framework frontend, herramientas de pruebas de interfaz y organización del equipo. Java para backend y JavaScript para frontend son decisiones técnicas del equipo; Maven y JUnit se usan para el backend. Ninguna de estas decisiones técnicas se atribuye al PO.
 
 ## 3. Respuestas confirmadas: no volver a consultarlas
 

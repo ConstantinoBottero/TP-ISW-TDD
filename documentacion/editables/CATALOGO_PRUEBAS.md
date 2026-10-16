@@ -1,8 +1,8 @@
 # Catálogo de escenarios unitarios y de integración
 
-EcoHarmony Park | TP6 | Inscribirme a actividad | Versión 2.0 - 14/10/2026
+EcoHarmony Park | TP6 | Inscribirme a actividad | Versión 2.1 - 16/10/2026
 
-**Planificación documental. No contiene tests implementados ni ejecutados.**
+**Planificación documental. Este catálogo describe escenarios aún pendientes; la primera prueba JUnit del backend está implementada por separado en `src/test/java/`.**
 
 Esta versión actualiza el catálogo anterior y conserva sus identificadores U001-U095 e I001-I039. Contiene pruebas de presencia, tipo, consistencia y reglas del dominio, junto con integración de registro, cupos, QR y correo. No contiene pruebas del frontend, navegador, componentes, estilos, botones ni modales. Las seis pruebas de usuario del TP6 se conservan como escenarios del servicio de aplicación, sin interfaz gráfica.
 
@@ -38,7 +38,7 @@ Actividades de una hora, de 09:00 a 18:00, sin turno que empiece a las 18:00. Se
 
 ### Contrato técnico propuesto
 
-Los ejemplos usan una entrada estructurada con tipos estrictos. Si el lenguaje tiene tipos estáticos, los tests de tipo incorrecto se escriben sobre la deserialización o validación de entrada, donde llega el dato sin tipar; no se fuerza una llamada imposible a un método tipado. En TypeScript, los datos externos requieren también validación en ejecución; el tipado estático no los verifica. `ValidadorEntrada` es un nombre orientativo para ese límite, no una obligación de agregar una clase nueva.
+Los ejemplos usan una entrada estructurada con tipos estrictos en el backend Java. Los tests de tipo incorrecto se escriben sobre la deserialización o validación de entrada, donde llega el dato sin tipar; no se fuerza una llamada imposible a un método tipado. El frontend JavaScript y los datos de API requieren validación en ejecución. `ValidadorEntrada` es un nombre orientativo para ese límite, no una obligación de agregar una clase nueva.
 
 | Dato | Tipo canónico | Presencia y restricciones |
 |---|---|---|
@@ -2158,7 +2158,7 @@ y ninguna persona de ese grupo se inscribe parcialmente
 - FAQ PO TDD EcoHarmony Park -US_inscribirme_a_actividad.pdf, pp.1-4: reglas confirmadas; preguntas 1, 12-16, 23, 28-32.
 - TP #6 ISW - G2.pdf, pp.1-3: respuestas específicas, correo separado, distribución y cupos.
 - CONSULTAS_Y_VALIDACION_PO.md: Q03-Q12 y D01-D04, registro único de pendientes.
-- CONVENCION_ESTILOS.md: Java/TypeScript, AAA, nomenclatura y accesibilidad.
+- CONVENCION_ESTILOS.md: Java/JavaScript, AAA, nomenclatura y accesibilidad.
 
 La referencia anterior a ISW_TP_RES_02_G04.pdf se retiró como evidencia: no está disponible entre los adjuntos. No usarla para afirmar un rechazo de duplicados confirmado.
 

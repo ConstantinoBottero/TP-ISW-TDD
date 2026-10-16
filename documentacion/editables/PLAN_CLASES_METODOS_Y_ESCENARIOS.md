@@ -2,9 +2,9 @@
 
 EcoHarmony Park | TP6 | Inscribirme a actividad
 
-Versión 2.0 - 14/10/2026
+Versión 2.1 - 16/10/2026
 
-Documento de planificación actualizado. No contiene código implementado ni pruebas ejecutadas. Los nombres de clases y métodos son orientativos; las firmas, el framework y el almacenamiento se decidirán al iniciar el desarrollo. Java y TypeScript son los lenguajes acordados.
+Documento de planificación actualizado. Los nombres de clases y métodos son orientativos; las firmas, el framework y el almacenamiento se decidirán durante el desarrollo. Java para backend y JavaScript para frontend son los lenguajes elegidos. La primera iteración del servicio y su prueba JUnit están en el código del repositorio.
 
 ## 1. Alcance y fuentes
 

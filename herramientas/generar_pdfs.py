@@ -185,9 +185,9 @@ def page_decor(canvas, doc, label):
     canvas.line(42, A4[1] - 30, A4[0] - 42, A4[1] - 30)
     canvas.setFillColor(FOREST)
     canvas.setFont('Lato', 8)
-    canvas.drawString(42, A4[1] - 23, 'EcoHarmony Park | TP6 | Documentación v2.0')
+    canvas.drawString(42, A4[1] - 23, 'EcoHarmony Park | TP6 | Documentación actualizada 16/10/2026')
     canvas.drawString(42, 24, label)
-    canvas.drawRightString(A4[0] - 42, 24, f'14/10/2026 | Página {doc.page}')
+    canvas.drawRightString(A4[0] - 42, 24, f'16/10/2026 | Página {doc.page}')
     canvas.restoreState()
 
 

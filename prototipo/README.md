@@ -44,7 +44,7 @@ Hay foco visible, enlace para saltar al contenido, controles operables con tecla
 
 ## Alcance de la validación del PO
 
-La portada, fotografías, escenas en video, textos, recorrido, términos y vistas de muestra deben ser validados por el PO. Los medios son referencias visuales y no prueban que EcoHarmony posea esas instalaciones o especies. La futura implementación de Java y TypeScript, la lógica de negocio y TDD quedan expresamente fuera de este prototipo.
+La portada, fotografías, escenas en video, textos, recorrido, términos y vistas de muestra deben ser validados por el PO. Los medios son referencias visuales y no prueban que EcoHarmony posea esas instalaciones o especies. La lógica de negocio del backend Java y las pruebas TDD quedan fuera de este prototipo. El frontend JavaScript del prototipo será la base para continuar la interfaz.
 
 ## Carpeta de edición y publicación
 
