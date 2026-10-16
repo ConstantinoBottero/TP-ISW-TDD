@@ -4,6 +4,8 @@ import java.util.Objects;
 
 /** Coordina la primera versión del caso de uso de inscripción. */
 public class ServicioInscripcion {
+    private static final String SOLO_LETRAS_Y_ESPACIOS = "[\\p{L} ]+";
+
     private final RepositorioParque repositorio;
     private final EmisorCorreo emisorCorreo;
 
@@ -13,20 +15,20 @@ public class ServicioInscripcion {
     }
 
     public ResultadoInscripcion inscribir(SolicitudInscripcion solicitud) {
-        validarNombresObligatorios(solicitud);
+        validarNombres(solicitud);
 
         String idInscripcion = repositorio.guardarInscripcion(solicitud);
         emisorCorreo.enviar(confirmacionDe(solicitud));
         return new ResultadoInscripcion(idInscripcion);
     }
 
-    private void validarNombresObligatorios(SolicitudInscripcion solicitud) {
+    private void validarNombres(SolicitudInscripcion solicitud) {
         for (Participante participante : solicitud.participantes()) {
             String nombre = participante.nombre();
             if (nombre == null || nombre.isBlank()) {
                 throw new IllegalArgumentException("El nombre es obligatorio");
             }
-            if (!nombre.matches("[\\p{L} ]+")) {
+            if (!nombre.matches(SOLO_LETRAS_Y_ESPACIOS)) {
                 throw new IllegalArgumentException("El nombre solo puede contener letras y espacios");
             }
         }
